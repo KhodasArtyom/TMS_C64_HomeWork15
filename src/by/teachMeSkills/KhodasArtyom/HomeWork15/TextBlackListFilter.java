@@ -12,7 +12,7 @@ public class TextBlackListFilter {
     }
 
     public boolean isObsceneLanguage(String userComment) {
-        for (int i = 0; i <array.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             Pattern pattern = Pattern.compile("\\b" + Pattern.quote(array[i]) + "\\b",
                     Pattern.UNICODE_CHARACTER_CLASS | Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
             Matcher matcher = pattern.matcher(userComment);
@@ -39,9 +39,11 @@ public class TextBlackListFilter {
 
     public String getModifiedText(String userComment) {
 
-          for (int i = 0; i < array.length; i++) {
-              userComment = userComment.replaceAll(array[i],"#####");
-          }
+
+        for (int i = 0; i < array.length; i++) {
+
+            userComment = userComment.replaceAll(array[i], "#####");
+        }
         return userComment;
     }
 }
