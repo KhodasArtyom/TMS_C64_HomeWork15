@@ -30,7 +30,7 @@ public class TextBlackListFilter {
             Pattern pattern = Pattern.compile("\\b" + Pattern.quote(array[i]) + "\\b", Pattern.UNICODE_CHARACTER_CLASS
                     | Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
             Matcher matcher = pattern.matcher(userComment);
-            if (matcher.find()) {
+            while (matcher.find()) {
                 counter++;
             }
         }
