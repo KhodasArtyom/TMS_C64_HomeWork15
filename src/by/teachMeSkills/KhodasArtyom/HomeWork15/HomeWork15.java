@@ -10,15 +10,15 @@ import java.util.Scanner;
 public class HomeWork15 {
 
     public static void main(String[] args) {
-        System.out.println("Choose the operation");
-        String operation = """
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Choose the operation");
+            String operation = """
                 1)Passport validation
                 2)Work with  obscene language
                 """;
-        System.out.println(operation);
-        Scanner scanner = new Scanner(System.in);
-        int button = Integer.parseInt(scanner.nextLine());
-        while (true) {
+            System.out.println(operation);
+            int button = Integer.parseInt(scanner.nextLine());
             switch (button) {
                 case 1 -> {
                     System.out.println("Fill in your passport details");
@@ -50,11 +50,10 @@ public class HomeWork15 {
                 }
                 case 2 -> {
                     System.out.println("Enter the string of bad words");
-                    String phrase = scanner.nextLine();
-                    String phrase2 = phrase;
-                    String [] ar = phrase2.split(" ");
-                    System.out.println(Arrays.toString(ar));
-                    TextBlackListFilter textBlackListFilter = new TextBlackListFilter(ar);;
+
+                    String [] arrayOfBadWords = scanner.nextLine().trim().split("\\s*,\\s* ");
+                    System.out.println(Arrays.toString(arrayOfBadWords));
+                    TextBlackListFilter textBlackListFilter = new TextBlackListFilter(arrayOfBadWords);;
                     System.out.println("Enter the phrase to check for bad words ");
                     String text = scanner.nextLine();
                     System.out.println("Check for bad words...");

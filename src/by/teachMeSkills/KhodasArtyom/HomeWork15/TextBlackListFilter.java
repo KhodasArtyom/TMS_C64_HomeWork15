@@ -5,17 +5,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TextBlackListFilter {
-    private String[] array;
+    private Pattern[] arrayOfBadWords;
 
     public TextBlackListFilter(String[] array) {
-        this.array = array;
+        arrayOfBadWords = new Pattern[array.length];
+        for (int i = 0; i < array.length; i++) {
+            arrayOfBadWords[i] = Pattern.compile("\\b" + Pattern.quote(array[i]) + "\\b",
+                      Pattern.UNICODE_CHARACTER_CLASS|Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE
+            );
+        }
     }
 
     public boolean isObsceneLanguage(String userComment) {
-        for (int i = 0; i < array.length; i++) {
-            Pattern pattern = Pattern.compile("\\b" + Pattern.quote(array[i]) + "\\b",
-                    Pattern.UNICODE_CHARACTER_CLASS | Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-            Matcher matcher = pattern.matcher(userComment);
+        for (int i = 0; i < arrayOfBadWords.length; i++) {
+            Matcher matcher = arrayOfBadWords[i].matcher(userComment);
             if (matcher.find()) {
                 return true;
             }
@@ -26,10 +29,8 @@ public class TextBlackListFilter {
 
     public int countBadWords(String userComment) {
         int counter = 0;
-        for (int i = 0; i < array.length; i++) {
-            Pattern pattern = Pattern.compile("\\b" + Pattern.quote(array[i]) + "\\b", Pattern.UNICODE_CHARACTER_CLASS
-                    | Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-            Matcher matcher = pattern.matcher(userComment);
+        for (int i = 0; i < arrayOfBadWords.length; i++) {
+            Matcher matcher = arrayOfBadWords[i].matcher(userComment);
             while (matcher.find()) {
                 counter++;
             }
@@ -38,12 +39,11 @@ public class TextBlackListFilter {
     }
 
     public String getModifiedText(String userComment) {
-
-
-        for (int i = 0; i < array.length; i++) {
-
-            userComment = userComment.replaceAll(array[i], "#####");
+        String newText= userComment;
+        for (int i = 0; i < arrayOfBadWords.length; i++) {
+            Matcher matcher = arrayOfBadWords[i].matcher(newText);
+            newText =matcher.replaceAll("####");
         }
-        return userComment;
+        return newText;
     }
 }

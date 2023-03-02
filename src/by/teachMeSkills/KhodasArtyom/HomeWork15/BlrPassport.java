@@ -14,9 +14,6 @@ public class BlrPassport {
     private LocalDate dateOfIssue;
     private LocalDate validity;
 
-    public static void main(String[] args) {
-
-    }
 
 
     public BlrPassport(String surName, String name, LocalDate birthday, Gender gender,
@@ -67,7 +64,7 @@ public class BlrPassport {
     }
 
     public boolean isExpired(LocalDate now) {
-        return now.isBefore(validity);
+        return now.isAfter(validity);
     }
 
     public boolean isValidatedPassportData(String surName, String name,
